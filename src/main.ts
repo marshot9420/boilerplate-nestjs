@@ -1,14 +1,14 @@
-import { INestApplication, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule } from '@nestjs/swagger';
 
 import * as expressBasicAuth from 'express-basic-auth';
 
+import { swaggerConfig } from '@/configs';
 import { API_URL } from '@/constants';
 
 import { AppModule } from '@/app.module';
-import { swaggerConfig } from '@/configs';
 
 class Application {
   private logger = new Logger(Application.name);
