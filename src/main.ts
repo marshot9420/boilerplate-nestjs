@@ -6,7 +6,11 @@ import { SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import * as expressBasicAuth from 'express-basic-auth';
 
-import { HttpExceptionFilter, SuccessInterceptor } from '@/common';
+import {
+  CustomLoggerService,
+  HttpExceptionFilter,
+  SuccessInterceptor,
+} from '@/common';
 import { corsConfig, swaggerConfig } from '@/configs';
 import { API_URL, APP } from '@/constants';
 
@@ -64,6 +68,7 @@ class Application {
 
 async function init() {
   const server = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: CustomLoggerService,
     bufferLogs: true,
   });
 
