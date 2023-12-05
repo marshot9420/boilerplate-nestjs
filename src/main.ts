@@ -5,8 +5,8 @@ import { SwaggerModule } from '@nestjs/swagger';
 
 import * as expressBasicAuth from 'express-basic-auth';
 
-import { swaggerConfig } from '@/configs';
-import { API_URL } from '@/constants';
+import { corsConfig, swaggerConfig } from '@/configs';
+import { API_URL, APP } from '@/constants';
 
 import { AppModule } from '@/app.module';
 
@@ -14,11 +14,13 @@ class Application {
   private logger = new Logger(Application.name);
   private HOST: string;
   private PORT: number;
+  private DEV_MODE: boolean;
 
   constructor(private app: NestExpressApplication) {
     this.app = app;
     this.HOST = process.env.HOST;
     this.PORT = Number(process.env.PORT);
+    this.DEV_MODE = process.env.NODE_ENV === APP.NODE_ENV.DEVELOPMENT;
   }
 
   private async setUpOpenAPI() {
@@ -37,6 +39,7 @@ class Application {
   }
 
   private async setUpGlobalMiddleware() {
+    this.app.enableCors(corsConfig(this.DEV_MODE));
     this.setUpOpenAPI();
   }
 
