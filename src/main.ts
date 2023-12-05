@@ -5,7 +5,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 
 import * as expressBasicAuth from 'express-basic-auth';
 
-import { HttpExceptionFilter } from '@/common';
+import { HttpExceptionFilter, SuccessInterceptor } from '@/common';
 import { corsConfig, swaggerConfig } from '@/configs';
 import { API_URL, APP } from '@/constants';
 
@@ -41,6 +41,7 @@ class Application {
 
   private async setUpGlobalMiddleware() {
     this.app.enableCors(corsConfig(this.DEV_MODE));
+    this.app.useGlobalInterceptors(new SuccessInterceptor());
     this.app.useGlobalFilters(new HttpExceptionFilter());
     this.setUpOpenAPI();
   }
