@@ -36,6 +36,18 @@ module.exports = {
         format: ['PascalCase'],
         suffix: ['Type'],
       },
+      {
+        selector: 'file',
+        format: ['PascalCase'],
+        custom: {
+          regex: '\\.dto\\.ts$',
+          match: false,
+        },
+        filter: {
+          regex: '(Form|Request|Response)$',
+          match: true,
+        },
+      },
     ],
   },
 };
